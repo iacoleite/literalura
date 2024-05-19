@@ -17,11 +17,6 @@ import java.util.Scanner;
 @Service
 public class Menu {
     Scanner sc = new Scanner(System.in);
-
-    ApiInvoker apiInvoker = new ApiInvoker();
-
-    JsonConverter converter = new JsonConverter();
-    private List<BookData> bookData = new ArrayList<>();
     private List<Book> books = new ArrayList<>();
     private List<Person> authors = new ArrayList<>();
 
@@ -140,7 +135,17 @@ public class Menu {
 //    }
 
     private void listarLivrosIdioma() {
-
+        System.out.println("Digite o idioma desejado:");
+        String idioma = sc.nextLine().toLowerCase();
+        Languages lang = Languages.fromIdioma(idioma);
+        System.out.println(lang);
+        List<Book> allBooks = bookRepository.findAll();
+        for (Book book : allBooks) {
+            System.out.println("Book: " + book.getTitle() + ", Languages: " + book.getLanguages());
+        }
+        List<Book> livrosIdioma = bookRepository.findBooksByLanguage(lang);
+        System.out.println("Livros disponíveis no idioma " + idioma);
+        livrosIdioma.forEach(System.out::println);
     }
 
 }

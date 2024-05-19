@@ -22,7 +22,11 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
     private List<Person> authors;
-    private List<String> languages;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "book_languages", joinColumns = @JoinColumn(name = "book_id"))
+    @Enumerated(EnumType.STRING)
+    @Column(name = "language")
+    private List<Languages> languages;
     private Integer downloadCount;
 
     public Book(BookData bookData) {
@@ -62,13 +66,13 @@ public class Book {
 //        this.author.add(authorsPerson);
 //    }
 
-    public List<String> getLanguages() {
-        return languages;
-    }
-
-    public void setLanguages(List<String> languages) {
-        this.languages = languages;
-    }
+//    public List<String> getLanguages() {
+//        return languages;
+//    }
+//
+//    public void setLanguages(List<String> languages) {
+//        this.languages = languages;
+//    }
 
     public Integer getDownloadCount() {
         return downloadCount;
@@ -102,6 +106,14 @@ public class Book {
             if (!author.getBooks().contains(this)) {
                 author.getBooks().add(this);
             }
+        }
+    }
+
+    public String getLanguages() {
+        if (languages == null || languages.isEmpty()) {
+            return "";
+        } else {
+            return String.valueOf(languages.get(0));
         }
     }
 }
