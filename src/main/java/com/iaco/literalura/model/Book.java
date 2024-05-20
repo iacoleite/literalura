@@ -82,16 +82,6 @@ public class Book {
         this.downloadCount = downloadCount;
     }
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "title='" + title + '\'' +
-                ", author=" + authors.toString() +
-                ", languages='" + languages + '\'' +
-                ", downloadCount=" + downloadCount +
-                '}';
-    }
-
 
     public void addAuthor(Person person) {
         this.authors.add(person);
@@ -115,5 +105,13 @@ public class Book {
         } else {
             return String.valueOf(languages.get(0));
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Título: " + title + '\n' +
+                "Autor(es): " + "\n"  + authors.stream().map(author -> author.toString()).collect(Collectors.joining("\n")) + '\n' +
+                "Idioma(s): " + languages.stream().map(Languages::getIdioma).collect(Collectors.joining(", ")) + '\n' +
+                "Downloads: " + downloadCount+ "\n";
     }
 }

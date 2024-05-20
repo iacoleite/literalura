@@ -16,4 +16,8 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
     @Query("SELECT p FROM Person p WHERE p.birthYear IS NOT NULL AND (p.deathYear IS NULL OR :year <= p.deathYear) AND :year >= p.birthYear")
     List<Person> findLivingAuthorsInYear(@Param("year") int year);
+
+    @Query("SELECT p FROM Person p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))")
+    List<Person> findByNameContainingIgnoreCase(@Param("name") String name);
+
 }

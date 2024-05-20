@@ -10,8 +10,7 @@ public class ApiInvoker {
     public String getData(String url) {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
-        System.out.println(request);
-        HttpResponse<String> response = null;
+        HttpResponse<String> response;
 
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());

@@ -53,6 +53,8 @@ public class Menu {
                 3 - Listar autores registrados
                 4 - Listar autores vivos em um determinado ano
                 5 - Listar livros em determinado idioma
+                6 - Listar Top 10 livros mais baixados
+                7 - Buscar autor
                 
                 0 - Sair
             """;
@@ -86,6 +88,12 @@ public class Menu {
                 case 5:
                     listarLivrosIdioma();
                     break;
+                case 6:
+                    listarTop10Livros();
+                    break;
+                case 7:
+                    buscarAutor();
+                    break;
                 case 0:
                     System.out.println("Saindo...");
                     break;
@@ -93,9 +101,8 @@ public class Menu {
                     System.out.println("Opção inválida!");
             }
         }
-
-
     }
+
 
     private void listarLivros() {
         books = bookRepository.findAll();
@@ -113,39 +120,32 @@ public class Menu {
         int year = sc.nextInt();
         sc.nextLine();
         personRepository.findLivingAuthorsInYear(year).stream().forEach(System.out::println);
-//        List<Person> livingAuthors = new ArrayList<>();
-//        for (Person author : authors) {
-//            if (verifyIfAuthorIsAlive(author, year)) {
-//                livingAuthors.add(author);
-//            }
-//        }
-//        System.out.println(livingAuthors);
-
     }
-
-//    private boolean verifyIfAuthorIsAlive(Person author, int year) {
-//        Integer birthYear = author.getBirthYear();
-//        Integer deathYear = author.getDeathYear();
-//        if (birthYear != 0) {
-//            if (deathYear == 0 || year <= deathYear) {
-//                return year >= birthYear;
-//            }
-//        }
-//        return false;
-//    }
 
     private void listarLivrosIdioma() {
         System.out.println("Digite o idioma desejado:");
         String idioma = sc.nextLine().toLowerCase();
         Languages lang = Languages.fromIdioma(idioma);
-        System.out.println(lang);
+
         List<Book> allBooks = bookRepository.findAll();
-        for (Book book : allBooks) {
-            System.out.println("Book: " + book.getTitle() + ", Languages: " + book.getLanguages());
-        }
+//        for (Book book : allBooks) {
+//            System.out.println("Book: " + book.getTitle() + ", Languages: " + book.getLanguages());
+//        }
         List<Book> livrosIdioma = bookRepository.findBooksByLanguage(lang);
         System.out.println("Livros disponíveis no idioma " + idioma);
         livrosIdioma.forEach(System.out::println);
+    }
+
+    private void listarTop10Livros() {
+        GetBook getter = new GetBook(bookRepository, personRepository);
+        getter.getTop(initial);
+    }
+
+    private void buscarAutor() {
+        System.out.println("Digite o nome do autor que deseja buscar informações: ");
+        String autor = sc.nextLine(); // Simply obtain the user input
+        GetBook getter = new GetBook(bookRepository, personRepository);
+        getter.getAuthor(autor); // Pass the user input directly to the getAuthor method
     }
 
 }
