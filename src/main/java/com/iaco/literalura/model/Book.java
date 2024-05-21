@@ -59,20 +59,6 @@ public class Book {
         return authors;
     }
 
-//    public void setAuthor(List<PersonData> author) {
-//        List<Person> authorsPerson = author.stream()
-//                .map(Person::new)
-//                .collect(Collectors.toList());
-//        this.author.add(authorsPerson);
-//    }
-
-//    public List<String> getLanguages() {
-//        return languages;
-//    }
-//
-//    public void setLanguages(List<String> languages) {
-//        this.languages = languages;
-//    }
 
     public Integer getDownloadCount() {
         return downloadCount;

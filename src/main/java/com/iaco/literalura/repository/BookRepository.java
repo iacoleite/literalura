@@ -14,7 +14,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     Book findByTitle(String title);
 
-//    List<Book> filterByLanguage(Languages languages);
+
 
     @Query("SELECT b FROM Book b WHERE %:language% MEMBER OF b.languages")
     List<Book> findBooksByLanguage(@Param("language") Languages language);
