@@ -2,7 +2,7 @@
 
 ## Descrição
 Projeto desenvolvido no programa ONE - Oracle Next Education realizado pela Alura em parceria com a Oracle. O projeto foi desenvolvido em Java 17 no decorrer da especialização em back-end. 
-Literalura é uma aplicação que permite aos usuários buscar livros, autores e informações relacionadas à literatura. Utiliza a API [Gutendex](https://gutendex.com/) para obter informações sobre livros e autores.
+Literalura é uma aplicação que permite aos usuários buscar informações sobre livros e autores. Utiliza a API [Gutendex](https://gutendex.com/) para obter informações sobre livros e autores.
 
 ## Funcionalidades
 A aplicação oferece as seguintes funcionalidades:
