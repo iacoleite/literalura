@@ -34,3 +34,5 @@ Após iniciar a aplicação, você será apresentado com um menu interativo. Bas
 
 ### Contribuição
 Contribuições são bem-vindas! Sinta-se à vontade para abrir um pull request ou uma issue.
+
+![badge literalura](https://github.com/iacoleite/literalura/assets/154355940/4913fac5-b584-4a3f-9d4a-8f0fec695a03)
