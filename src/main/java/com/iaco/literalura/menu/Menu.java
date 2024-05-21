@@ -142,8 +142,8 @@ public class Menu {
     }
 
     private void buscarAutor() {
-        System.out.println("Digite o nome do autor que deseja buscar informações: ");
-        String autor = sc.nextLine(); // Simply obtain the user input
+        System.out.println("Digite APENAS o nome OU sobrenome do autor que deseja buscar informações: ");
+        String autor = sc.nextLine().replace(" ", "+"); // Simply obtain the user input
         GetBook getter = new GetBook(bookRepository, personRepository);
         getter.getAuthor(autor); // Pass the user input directly to the getAuthor method
     }

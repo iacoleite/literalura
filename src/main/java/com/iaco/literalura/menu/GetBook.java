@@ -10,7 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Scanner;
+import java.util.function.Function;
 
 public class GetBook {
     ApiInvoker apiInvoker = new ApiInvoker();
@@ -105,22 +106,43 @@ public class GetBook {
                 System.out.println("Encontrado no banco de dados: " +"\n"+ matchingAuthors.get(0));
 
             } else {
+
+                // If the author is not found in the database, proceed with other checks
                 System.out.println("Autor não encontrado no banco de dados.");
                 // busca um livro do autor e insere no banco de dados.
-                List<Person> authors = new ArrayList<>();
-                for (PersonData authordata : dadosLivro.authors()) {
-                    Person author = new Person(authordata);
-                    List<Person> existingAuthorsList = personRepository.findByName(author.getName());
-                    if (existingAuthorsList.isEmpty()) {
-                        author = personRepository.save(author);
-                    } else {
-                        author = existingAuthorsList.get(0);
+                Book existingBook = bookRepository.findByTitle(book.getTitle());
+                if (existingBook != null) {
+                    // If the book by the author is found in the database
+                    List<Person> existingAuthors = existingBook.getAuthor();
+                    System.out.println("Existing book found with authors: " + existingAuthors);
+
+                    // Check if any of the existing book's authors match the search term
+                    for (Person author : existingAuthors) {
+                        String normalizedAuthorName = author.getName().toLowerCase().trim();
+                        if (normalizedAuthorName.contains(normalizedSearch)) {
+                            // If the searched author matches, print their information and return
+                            System.out.println("Found author in existing book: " + author);
+                            return;
+                        }
                     }
-                    authors.add(author);
+                } else {
+                    System.out.println("Autor não encontrado no banco de dados.");
+                    // busca um livro do autor e insere no banco de dados.
+                    List<Person> authors = new ArrayList<>();
+                    for (PersonData authordata : dadosLivro.authors()) {
+                        Person author = new Person(authordata);
+                        List<Person> existingAuthorsList = personRepository.findByName(author.getName());
+                        if (existingAuthorsList.isEmpty()) {
+                            author = personRepository.save(author); // Save the new author to the database
+                        } else {
+                            author = existingAuthorsList.get(0); // Use the existing author from the database
+                        }
+                        authors.add(author);
+                    }
+                    book.setAuthors(authors);
+                    bookRepository.save(book); // Save the book with the list of authors
+                    System.out.println("Novo livro inserido no banco de dados: \n" + book);
                 }
-                book.setAuthors(authors);
-                bookRepository.save(book);
-                System.out.println("Novo livro inserido no banco de dados: \n" + book);
             }
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Autor não encontrado.\n");
