@@ -226,4 +226,9 @@ public enum Languages {
         }
         throw new IllegalArgumentException("Can't find a known language. Idioma: " + text);
     }
+
+    public static String getIdiomaFromCode(String code) {
+        Languages language = Languages.fromCode(code);
+        return language.getIdioma();
+    }
 }

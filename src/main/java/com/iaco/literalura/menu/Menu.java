@@ -3,16 +3,11 @@ package com.iaco.literalura.menu;
 import com.iaco.literalura.model.*;
 import com.iaco.literalura.repository.BookRepository;
 import com.iaco.literalura.repository.PersonRepository;
-import com.iaco.literalura.service.ApiInvoker;
-import com.iaco.literalura.service.JsonConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class Menu {
@@ -55,6 +50,7 @@ public class Menu {
                 5 - Listar livros em determinado idioma
                 6 - Listar Top 10 livros mais baixados
                 7 - Buscar autor
+                8 - Verificar percentual de livros por idioma
                 
                 0 - Sair
             """;
@@ -94,6 +90,9 @@ public class Menu {
                 case 7:
                     buscarAutor();
                     break;
+                case 8:
+                    listarPercentualIdioma();
+                    break;
                 case 0:
                     System.out.println("Saindo...");
                     break;
@@ -102,6 +101,7 @@ public class Menu {
             }
         }
     }
+
 
 
     private void listarLivros() {
@@ -148,6 +148,18 @@ public class Menu {
         getter.getAuthor(autor); // Pass the user input directly to the getAuthor method
     }
 
+    private void listarPercentualIdioma() {
+        books = bookRepository.findAll();
+        Map<String, DoubleSummaryStatistics> percentualPorIdioma = books.stream()
+                .collect(Collectors.groupingBy(Book::getLanguages, Collectors.summarizingDouble(book -> 1)));
+
+        long totalDeLivros = books.size();
+        System.out.println("Percentual de livros no banco de dados em determinados idiomas: ");
+        percentualPorIdioma.forEach((language, stats) -> {
+            double porcentagem = ((double) stats.getCount() / totalDeLivros) * 100;
+            System.out.println(Languages.getIdiomaFromCode(language) + ": " + porcentagem + "%\n");
+        });
+    }
 }
 
 
