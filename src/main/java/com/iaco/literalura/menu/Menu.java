@@ -67,10 +67,7 @@ public class Menu {
             sc.nextLine();
             switch (option) {
                 case 1:
-                    System.out.println("Deseja o nome do livro que deseja pesquisar: ");
-                    String url = initial + sc.nextLine().replace(" ", "+");
-                    GetBook getter = new GetBook(bookRepository, personRepository);
-                    getter.getDataBook(url);
+                    buscarLivros();
                     break;
                 case 2:
                     listarLivros();
@@ -102,6 +99,12 @@ public class Menu {
         }
     }
 
+    private void buscarLivros() {
+        System.out.println("Deseja o nome do livro que deseja pesquisar: ");
+        String url = initial + sc.nextLine().replace(" ", "%20");
+        GetBook getter = new GetBook(bookRepository, personRepository);
+        getter.getDataBook(url);
+    }
 
 
     private void listarLivros() {
@@ -143,9 +146,9 @@ public class Menu {
 
     private void buscarAutor() {
         System.out.println("Digite APENAS o nome OU sobrenome do autor que deseja buscar informações: ");
-        String autor = sc.nextLine().replace(" ", "+"); // Simply obtain the user input
+        String autor = sc.nextLine().replace(" ", "%20");
         GetBook getter = new GetBook(bookRepository, personRepository);
-        getter.getAuthor(autor); // Pass the user input directly to the getAuthor method
+        getter.getAuthor(autor);
     }
 
     private void listarPercentualIdioma() {
