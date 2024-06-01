@@ -3,6 +3,7 @@ package com.iaco.literalura.menu;
 import com.iaco.literalura.model.*;
 import com.iaco.literalura.repository.BookRepository;
 import com.iaco.literalura.repository.PersonRepository;
+import com.iaco.literalura.service.GetBook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

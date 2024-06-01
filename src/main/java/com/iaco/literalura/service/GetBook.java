@@ -1,10 +1,8 @@
-package com.iaco.literalura.menu;
+package com.iaco.literalura.service;
 
 import com.iaco.literalura.model.*;
 import com.iaco.literalura.repository.BookRepository;
 import com.iaco.literalura.repository.PersonRepository;
-import com.iaco.literalura.service.ApiInvoker;
-import com.iaco.literalura.service.JsonConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
