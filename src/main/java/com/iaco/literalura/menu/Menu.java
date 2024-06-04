@@ -64,7 +64,11 @@ public class Menu {
         while (option != 0) {
 
             System.out.println(firstMenu);
-            option = sc.nextInt();
+            try {
+                option = sc.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("");
+            }
             sc.nextLine();
             switch (option) {
                 case 1:
@@ -95,7 +99,7 @@ public class Menu {
                     System.out.println("Saindo...");
                     break;
                 default:
-                    System.out.println("Opção inválida!");
+                    System.out.println("Opção inválida!\n");
             }
         }
     }
